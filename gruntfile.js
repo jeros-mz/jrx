@@ -15,22 +15,22 @@ module.exports = function(grunt) {
 					'<%= pkg.path.jrx %>/jrx.extend.js',
 					'<%= pkg.path.jrx %>/jrx.init.js'
 				],
-				dest: '<%= pkg.path.dist %>/jrx.js'
+				dest: 'jrx.js'
 			}
 		},
 		uglify: {
 			options: {
-				banner: '/*! <%= pkg.name %> <%= grunt.template.today("yyyy-mm-dd") %> */\n',
+				banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' + '<%= grunt.template.today("yyyy-mm-dd") %> */',
 				report: 'min'
 			},
 			jrx: {
 				options:{
 					sourceMap : true,
-					sourceMapName:'<%= pkg.path.dist %>/jrx.min.map'
+					sourceMapName:'jrx.min.map'
 				},
 				files : {
-					'<%= pkg.path.dist %>/jrx.min.js' : [
-						'<%= pkg.path.dist %>/jrx.js'
+					'jrx.min.js' : [
+						'jrx.js'
 					]
 				}
 			}

@@ -1,4 +1,4 @@
-/*! jrx - v1.0.0 - 2014-09-26 */(function(document, window){
+/*! jrx - v0.1.0 - 2014-09-29 */(function(document, window){
 	'use strict';
 	
 	/**
