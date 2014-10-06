@@ -1,4 +1,4 @@
-/*! jrx - v0.1.0 - 2014-09-29 */(function(document, window){
+/*! jrx - v0.1.0 - 2014-10-06 */(function(document, window){
 	'use strict';
 	
 	/**
@@ -257,8 +257,8 @@
 	        var code = e.keyCode;
 	        var rtnValue = false;
 	        
-	        // <backspace> || Function Key || Number Key || Key Pad
-	        if(code == 8 || (code >= 35 && code <= 40) || (code >= 46 && code <= 57) || (code >= 96 && code <= 105) ){
+	        // <backspace> || <tab> || Function Key || Number Key || Key Pad
+	        if(code == 8 || code == 9 || (code >= 35 && code <= 40) || (code >= 46 && code <= 57) || (code >= 96 && code <= 105) ){
 	        	rtnValue = true;
 	        }
 	        
