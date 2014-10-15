@@ -34,7 +34,9 @@
 		        'staticPath': 	{ 'editable': true, 	'value': '/' },
 		        'contextPath': 	{ 'editable': true, 	'value': '/' },
 		        'loginUrl':  	{ 'editable': true, 	'value': ''},
-		        'logoutUrl':  	{ 'editable': true, 	'value': ''}
+		        'logoutUrl':  	{ 'editable': true, 	'value': ''},
+		        'loading' : 	{ 'editable': true, 	'value': './images/loading_medium.gif'},
+		        'maskColor' : 	{ 'editable': true, 	'value': '#aaaaaa'}
 		    },
 		    
 		    /**
@@ -163,6 +165,30 @@
 		};
 		
 		/**
+		 * @method : extend
+		 * @TODO : deep option 처리.
+		 */
+		this.extend = function () {
+			
+			var deep = false,
+				origin = {},
+				add = {};
+				
+			if($.isBoolean(arguments[0])){
+				deep = arguments[0];
+				origin = arguments[1];
+				add = arguments[2];
+			} else {
+				origin = arguments[0];
+				add = arguments[1];
+			}
+			
+			for(var o in origin) {
+				origin[o] = add[o] ? add[o] : origin[o];
+			}
+		};
+		
+		/**
 		 * @method : strip
 		 * @desc : remove tag
 		 */	
@@ -273,6 +299,25 @@
 	        
 	        return rtnValue;
 	    };
+	    
+	    /*
+	     * @method : addCommas [Function]
+	     * @desc : 
+	     */
+	    this.addCommas = function (nStr) {
+	        
+	        nStr += '';
+			var x = nStr.split('.');
+			var x1 = x[0];
+			var x2 = x.length > 1 ? '.' + x[1] : '';
+			var rgx = /(\d+)(\d{3})/;
+			
+			while (rgx.test(x1)) {
+				x1 = x1.replace(rgx, '$1' + ',' + '$2');
+			}
+			return x1 + x2;
+	    };
+	    
 	    
 	    /*
 	     * @name : imageLoadResize [Function]
@@ -439,7 +484,16 @@
 	jrx.define('loading', new function(){
 		var id = 'loading',
 	    	cls = 'loading',
-	        isLoading = false, isTimeout = false, delay = 800;
+	        isLoading = false, isTimeout = false, delay = 800,
+	        css = {
+	    		'position' : 'fixed',
+	    		'top' : 0,
+	    		'left' : 0,
+	    		'width' : '100%',
+	    		'height' : '100%',
+	    		'background' : 'url(' + jrx.config('loading') + ') no-repeat 50% 50%',
+	    		'z-index' : 98
+	    	};
 	    
 	    /*
 		 * @method : show
@@ -449,10 +503,17 @@
 	        if(!isLoading){
 	            jrx.mask && jrx.mask.show();
 	            
-	            var msk = document.createElement('div');
+	            var msk = document.createElement('div'), style = '';
 	            msk.setAttribute('id', id);
 	            msk.setAttribute('class', id);
 	            
+	            css.background = 'url(' + jrx.config('loading') + ') no-repeat 50% 50%';
+	            
+	            for(var v in css){
+		        	style += v + ':' + css[v] + ';';
+		        }
+		        msk.setAttribute('style', style);
+		        
 	            if (!document.getElementById(id)) document.body.appendChild(msk);
 	            isLoading= true;
 	            isTimeout = false;
@@ -493,16 +554,40 @@
 	 */
 	jrx.define('mask', new function(){
 		var id = 'mask',
-	    	cls = 'mask';
+	    	cls = 'mask',
+	    	css = {
+	    		'position' : 'fixed',
+	    		'top' : 0,
+	    		'left' : 0,
+	    		'width' : '100%',
+	    		'height' : '100%',
+	    		'background-color' : '#aaaaaa',
+	    		'opacity' : 0.4,
+	    		'filter' : 'alpha(opacity=40)',
+	    		'z-index' : 98
+	    	};
 	    
 	    /*
 		 * @method : show
 		 */
-	    this.show = function () {
+	    this.show = function (options) {
 	        
 	        var msk = document.createElement('div');
+	        var style = '';
+	        
 	        msk.setAttribute('id', id);
 	        msk.setAttribute('class', cls);
+	        
+	        jrx.extend(css, options);
+	        
+	        jrx.log(css);
+	        
+	        //css['background-color'] = jrx.config('maskColor');
+	        
+	        for(var v in css){
+	        	style += v + ':' + css[v] + ';';
+	        }
+	        msk.setAttribute('style', style);
 	        
 	        if (!document.getElementById(id)) document.body.appendChild(msk);
 	        

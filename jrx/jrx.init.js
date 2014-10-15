@@ -37,9 +37,6 @@
 		//========================= variable =========================
 		var dateFormat = 'yy-mm-dd',
 			timeFormat = 'HH:mm',
-			appconfig = {
-				"useLog" : true
-			},
 			content_type = {
 				defaults : 'application/x-www-form-urlencoded; charset=UTF-8',
 				json : 'application/json'
@@ -50,13 +47,7 @@
 			$contents = $('#contents'),
 			$page = $contents.find('.sub-content');
 		//============================================================
-		
-		
-		//================== application configuration ===============
-		$.config(appconfig);
-		//============================================================
-		
-		
+				
 		//===================== set jquery ajax. ===================== contentType : content_type.defaults, 
 		$.ajaxSetup({ cache: false,
         	converters: {
