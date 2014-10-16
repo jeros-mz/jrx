@@ -23,7 +23,7 @@
 		if( utils[v] === undefined ){
 			utils[v] = jrx[v];
 		} else {
-			jrx.log('ooora!');
+			jrx.log('ooora! - ' + v);
 		}
 	});
 	//============================================================
@@ -40,12 +40,7 @@
 			content_type = {
 				defaults : 'application/x-www-form-urlencoded; charset=UTF-8',
 				json : 'application/json'
-			},
-			$logo = $('#header_logo'),
-			$gnb = $('#nav'),
-			$lnb = $('#lnb'),
-			$contents = $('#contents'),
-			$page = $contents.find('.sub-content');
+			};
 		//============================================================
 				
 		//===================== set jquery ajax. ===================== contentType : content_type.defaults, 
@@ -73,7 +68,7 @@
                 dateFormat: dateFormat
             });
             
-			$('input[date]', $contents).datepicker();
+			// $('input[date]', $contents).datepicker();
 		}
 		//============================================================
 		

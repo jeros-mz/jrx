@@ -35,6 +35,10 @@
 		return $.type(obj) === 'number';
 	});
 	
+	jrx.define('isArray', function(obj){
+		return $.type(obj) === 'array';
+	});
+	
 	jrx.define('isBoolean', function(obj){
 		return $.type(obj) === 'boolean';
 	});

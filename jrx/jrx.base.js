@@ -28,7 +28,7 @@
 		     * @depends: config [Object]
 		     */
 	    var _config = {
-		        'useLog': 		{ 'editable': true, 	'value': true },
+		        'useLog': 		{ 'editable': true, 	'value': false },
 		        'isLogin': 		{ 'editable': true, 	'value': false },
 		        'root': 		{ 'editable': true, 	'value': '/' },
 		        'staticPath': 	{ 'editable': true, 	'value': '/' },
@@ -112,7 +112,6 @@
 		 * @params : object
 		 * @method log
 		 * @param {} obj
-		 * @return ThisExpression
 		 */
 		this.log = function (obj) {
 			var useLog = this.config('useLog') == true && window.console;
@@ -123,7 +122,6 @@
 	                console.log && console.log(obj);
 	            }
 	        }
-	        return this;
 		};
 	    
 		/**
@@ -318,6 +316,31 @@
 			return x1 + x2;
 	    };
 	    
+	    /*
+	     * @method : preloadImage [Function]
+	     * @desc : 
+	     */
+	    this.preloadImage = function () {
+	        
+	        if(arguments.length === 0 ) return;
+	        
+			var i = 0;
+	        			
+	        if(jrx.isArray(arguments[0])){
+	        	for (i = 0; i < arguments[0].length; i++) {
+					load(arguments[0][i]);
+				}
+	        } else {
+	        	for (i = 0; i < arguments.length; i++) {
+					load(arguments[i]);
+				}
+	        }
+	        function load(src) {
+	        	var img = new Image();
+				img.src = src;
+	        }
+	    };
+	    
 	    
 	    /*
 	     * @name : imageLoadResize [Function]
@@ -498,7 +521,7 @@
 	    /*
 		 * @method : show
 		 */
-	    this.show = function () {
+	    this.show = function (addStyle) {
 	        
 	        if(!isLoading){
 	            jrx.mask && jrx.mask.show();
@@ -508,6 +531,11 @@
 	            msk.setAttribute('class', id);
 	            
 	            css.background = 'url(' + jrx.config('loading') + ') no-repeat 50% 50%';
+	            
+	            if(addStyle){
+		        	css = $.extend(css, addStyle);
+		        }
+	            
 	            
 	            for(var v in css){
 		        	style += v + ':' + css[v] + ';';
@@ -570,7 +598,7 @@
 	    /*
 		 * @method : show
 		 */
-	    this.show = function (options) {
+	    this.show = function (addStyle) {
 	        
 	        var msk = document.createElement('div');
 	        var style = '';
@@ -578,11 +606,11 @@
 	        msk.setAttribute('id', id);
 	        msk.setAttribute('class', cls);
 	        
-	        jrx.extend(css, options);
+	        css['background-color'] = jrx.config('maskColor');
 	        
-	        jrx.log(css);
-	        
-	        //css['background-color'] = jrx.config('maskColor');
+	        if(addStyle){
+	        	css = $.extend(css, addStyle);
+	        }
 	        
 	        for(var v in css){
 	        	style += v + ':' + css[v] + ';';
