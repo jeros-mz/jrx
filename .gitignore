@@ -21,6 +21,7 @@
 *.zip
 .svn
 node_modules
+reports
 
 # Logs and databases #
 ######################
@@ -38,3 +39,4 @@ node_modules
 ehthumbs.db
 Thumbs.dbdoc
 doc
+

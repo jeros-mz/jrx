@@ -3,7 +3,7 @@ module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		concat: {
+		concata: {
 			options: {
 				separator: ';',
 				stripBanners: true,
@@ -41,6 +41,17 @@ module.exports = function(grunt) {
 				// src : ['<%= pkg.path.plugin %>/jquery.plugin.sample.js', 'scripts/jquery/jquery.utils.js'],
 				options : {destination : 'doc'}
 			}
+		},
+		plato: {
+			// options: {
+				// jshint : false
+				// // jshint: grunt.file.readJSON('.jshintrc')
+			// },
+			task: {
+				files: {
+					'reports': ['jrx/*.js']
+				}
+			}
 		}
 	});
 	
@@ -49,13 +60,16 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-jsdoc');
 	grunt.loadNpmTasks('grunt-contrib-less');
 	grunt.loadNpmTasks('grunt-contrib-concat');
+	grunt.loadNpmTasks('grunt-plato');
 	
 	// Default task(s).
 	grunt.registerTask('default', ['concat', 'uglify', 'jsdoc']);
 	
 	grunt.registerTask('doc', ['jsdoc']);
 	
-	grunt.registerTask('min', ['concat', 'uglify']);
+	grunt.registerTask('min', ['concata', 'uglify']);
+	
+	grunt.registerTask('report', ['plato']);
 	
 	// grunt.registerTask('concat', ['concat']);
 	
