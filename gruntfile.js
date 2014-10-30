@@ -3,7 +3,7 @@ module.exports = function(grunt) {
 	// Project configuration.
 	grunt.initConfig({
 		pkg: grunt.file.readJSON('package.json'),
-		concata: {
+		concat: {
 			options: {
 				separator: ';',
 				stripBanners: true,
@@ -67,7 +67,7 @@ module.exports = function(grunt) {
 	
 	grunt.registerTask('doc', ['jsdoc']);
 	
-	grunt.registerTask('min', ['concata', 'uglify']);
+	grunt.registerTask('min', ['concat', 'uglify']);
 	
 	grunt.registerTask('report', ['plato']);
 	

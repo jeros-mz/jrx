@@ -688,7 +688,7 @@
 */
 if (typeof String.prototype.trim != 'function') {
     String.prototype.trim = function () {
-        return this.replace(_REGEXP.trim, "");
+        return this.replace(jrx.regexp('trim'), "");
     };
 };
 

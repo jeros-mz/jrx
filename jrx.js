@@ -1,4 +1,4 @@
-/*! jrx - v0.1.0 - 2014-10-17 */(function(document, window){
+/*! jrx - v0.1.0 - 2014-10-30 */(function(document, window){
 	'use strict';
 	
 	/**
@@ -679,7 +679,7 @@
 */
 if (typeof String.prototype.trim != 'function') {
     String.prototype.trim = function () {
-        return this.replace(_REGEXP.trim, "");
+        return this.replace(jrx.regexp('trim'), "");
     };
 };
 
