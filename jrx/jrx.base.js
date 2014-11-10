@@ -36,7 +36,8 @@
 		        'loginUrl':  	{ 'editable': true, 	'value': ''},
 		        'logoutUrl':  	{ 'editable': true, 	'value': ''},
 		        'loading' : 	{ 'editable': true, 	'value': './images/loading_medium.gif'},
-		        'maskColor' : 	{ 'editable': true, 	'value': '#aaaaaa'}
+		        'maskColor' : 	{ 'editable': true, 	'value': '#aaaaaa'},
+		        'useAlert' : 	{ 'editable': true, 	'value': true}
 		    },
 		    
 		    /**
@@ -68,7 +69,7 @@
 	        } else if($.type(p) === 'string'){
 	        	return get(p);
 	        } else {
-	        	throw new Error('parameter is only json or string. current type : ' + $.type(v));
+	        	throw new Error('parameter is only json or string. current type : ' + $.type(p));
 	        }
 	        
 	        /**
@@ -100,10 +101,21 @@
 	    	 */
 	    	function get(n) {
 	        	
-	            if(_config[n] === undefined){
+	            if(_config[n] === undefined && n !== 'all'){
 	                throw new Error('undefined property name : ' + n);
 	            }
-	            return _config[n].value; 
+	            
+	            var returnVal;
+	            
+	            if(n == 'all'){
+	            	returnVal = {};
+	            	for(var item in _config){
+	            		returnVal[item] = _config[item].value;  
+	            	}
+	            } else {
+	            	returnVal = _config[n].value;
+	            }
+	            return returnVal; 
 	        }
 	    };
 	    

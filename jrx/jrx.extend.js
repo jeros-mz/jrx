@@ -119,24 +119,31 @@
                     $.each(errorList, function (i, v) {
                         var _$element = $(v.element);
                         if (i != 0) return;
-                        textLabels += $('<label />')
-						    .attr('for', _$element.attr('id'))
-						    .html('<strong>' + getMessage(_$element) + ' : </strong>' + (_$element.data('message') || v.message))
-						    .appendTo(labelWrap);
+                        // textLabels += $('<label />')
+						    // .attr('for', _$element.attr('id'))
+						    // .html('<strong>' + getMessage(_$element) + ' : </strong>' + (_$element.data('message') || v.message))
+						    // .appendTo(labelWrap);
                         if (i == 0) {
                             textAlert += getMessage(_$element) + (_$element.data('message') || v.message);
+                            _$element.focus();
                         }
                     });
 
                     function getMessage(_$element) {
                         return _$element.data('title')
-						    || $('[for=' + _$element.attr('id') + ']').text()
+						    // || $('[for=' + _$element.attr('id') + ']').text()
+						    || _$element.parent().find('>label').text()
 						    || _$element.parent('label').text()
 						    || _$element.attr('placeholder')
 						    || _$element.attr('name');
                     };
 
-                    $.stateAlarm(textAlert);
+					if(!jrx.config('useAlert') && $.isfunction($.stateAlarm)){
+						$.stateAlarm(textAlert);	
+					} else {
+						alert(textAlert);
+					}
+                    
                     return;
                 },
                 submitHandler: function (form) { form.submit(); }
