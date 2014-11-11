@@ -1,4 +1,4 @@
-/*! jrx - v0.1.0 - 2014-11-10 */(function(document, window){
+/*! jrx - v0.1.0 - 2014-11-11 */(function(document, window){
 	'use strict';
 	
 	/**
@@ -926,31 +926,32 @@ if (!Array.prototype.indexOf) {
     		
             $.validator.setDefaults({
                 ignore: '',
+                ignoreTitle: true,
                 onkeyup: false,
                 onfocusout: false,
+                onclick : false,
                 focusInvalid: true,
                 showErrors: function (errorMap, errorList) {
 
                     if (errorList.length === 0) return false;
 
-                    var labelWrap = $('<div />').addClass('label-lists'), textLabels = '', textAlert = '';
-
+                    var labelWrap = $('<div />').addClass('label-lists'), 
+                    	textMessage = '';
+					
                     $.each(errorList, function (i, v) {
                         var _$element = $(v.element);
-                        if (i != 0) return;
-                        // textLabels += $('<label />')
-						    // .attr('for', _$element.attr('id'))
-						    // .html('<strong>' + getMessage(_$element) + ' : </strong>' + (_$element.data('message') || v.message))
-						    // .appendTo(labelWrap);
+                        
                         if (i == 0) {
-                            textAlert += getMessage(_$element) + (_$element.data('message') || v.message);
+                            textMessage = _$element.data('message') || (getMessage(_$element) + (errorMap[v.element.name] || ''));
                             _$element.focus();
                         }
                     });
 
                     function getMessage(_$element) {
+                    	
+                    	
                         return _$element.data('title')
-						    // || $('[for=' + _$element.attr('id') + ']').text()
+						    || _$element.attr('title')
 						    || _$element.parent().find('>label').text()
 						    || _$element.parent('label').text()
 						    || _$element.attr('placeholder')
@@ -958,9 +959,9 @@ if (!Array.prototype.indexOf) {
                     };
 
 					if(!jrx.config('useAlert') && $.isfunction($.stateAlarm)){
-						$.stateAlarm(textAlert);	
+						$.stateAlarm(textMessage);	
 					} else {
-						alert(textAlert);
+						alert(textMessage);
 					}
                     
                     return;
